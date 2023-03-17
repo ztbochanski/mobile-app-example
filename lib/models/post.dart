@@ -21,9 +21,6 @@ class Post {
     required this.quantity,
   });
 
-  /// Returns the date in a formatted string (e.g. "January 1, 2021")
-  String get formattedDate => DateFormat.yMMMMEEEEd().format(date);
-
   /// Converts the post to a map for saving to the database.
   Map<String, dynamic> toMap() {
     return {
@@ -35,12 +32,20 @@ class Post {
     };
   }
 
-  /// Converts the snapshot to a post object for accessing the data.
-  Post.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> doc)
-      : id = doc.id,
-        date = (doc.data()!['date'] as Timestamp).toDate(),
-        imageURL = doc.data()!['imageURL'],
-        latitude = doc.data()!['latitude'],
-        longitude = doc.data()!['longitude'],
-        quantity = doc.data()!['quantity'];
+  /// Converts the post from a snapshot to a post object.
+  factory Post.fromFirestore(DocumentSnapshot snapshot) {
+    final data = snapshot.data() as Map<String, dynamic>;
+    final date = (data['date'] as Timestamp).toDate();
+    return Post(
+      id: snapshot.id,
+      date: date,
+      imageURL: data['imageURL'],
+      latitude: data['latitude'],
+      longitude: data['longitude'],
+      quantity: data['quantity'],
+    );
+  }
+
+  /// Returns the date in a formatted string (e.g. "January 1, 2021")
+  String get formattedDate => DateFormat.yMMMMEEEEd().format(date);
 }
