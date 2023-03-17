@@ -31,6 +31,7 @@ class _PostListViewState extends State<PostListView> {
           return ListView.builder(
             itemCount: postsList.length(),
             itemBuilder: (context, index) {
+              postsList.descendingSort();
               var post = postsList.posts[index];
               return ListTile(
                   title: Text(post.formattedDate.toString()),
