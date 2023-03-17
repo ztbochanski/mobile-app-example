@@ -21,7 +21,10 @@ class FirestoreService {
     _instance = FirestoreService._();
   }
 
-  // CRUD methods
+  Stream<QuerySnapshot> postsStream() {
+    return FirebaseFirestore.instance.collection('posts').snapshots();
+  }
+
   Future<void> addMetadata(Post post) async {
     LocationData? loc = await LocationService.getLocation();
     post.latitude = loc!.latitude as double;
@@ -34,16 +37,5 @@ class FirestoreService {
     await FirebaseFirestore.instance
         .collection(collectionName)
         .add(post.toMap());
-  }
-
-  Stream<List<Post>> posts() {
-    return FirebaseFirestore.instance
-        .collection(collectionName)
-        .snapshots()
-        .map((snapshot) {
-      return snapshot.docs
-          .map((doc) => Post.fromDocumentSnapshot(doc))
-          .toList();
-    });
   }
 }
