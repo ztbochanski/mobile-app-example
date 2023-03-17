@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:intl/intl.dart';
+import 'package:wasteagram/database/database_service.dart';
+import 'package:wasteagram/models/post.dart';
 
 class PostList extends StatefulWidget {
   const PostList({Key? key}) : super(key: key);
@@ -11,27 +11,39 @@ class PostList extends StatefulWidget {
 }
 
 class _PostListState extends State<PostList> {
+  final DatabaseService _databaseService = DatabaseService();
+
+  Stream<List<Post>>? _posts;
+
+  @override
+  void initState() {
+    super.initState();
+    _getPosts();
+  }
+
+  void _getPosts() {
+    _posts = _databaseService.posts();
+  }
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('posts').snapshots(),
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
-            DateFormat dateFormat = DateFormat('EEEE, MMMM d, yyyy');
-
-            return ListView.builder(
-                itemCount: snapshot.data!.docs.length,
-                itemBuilder: (context, index) {
-                  var post = snapshot.data!.docs[index];
-                  return ListTile(
-                      title: Text(dateFormat.format(post['date'].toDate())),
-                      subtitle: Text(post['quantity'].toString()));
-                });
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error $snapshot.error'));
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        });
+      stream: _posts,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return ListView.builder(
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                var post = snapshot.data![index];
+                return ListTile(
+                    title: Text(post.date), subtitle: Text(post.quantity));
+              });
+        } else if (snapshot.hasError) {
+          return const Center(child: Text('An error occurred'));
+        } else {
+          return const Center(child: CircularProgressIndicator());
+        }
+      },
+    );
   }
 }
