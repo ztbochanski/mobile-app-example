@@ -18,7 +18,7 @@ class _PostListViewState extends State<PostListView> {
     return _firestoreService.postsStream();
   }
 
-  PostsList _getPostsList(QuerySnapshot snapshot) {
+  PostsList _postsListToModel(QuerySnapshot snapshot) {
     return PostsList.fromFirestore(snapshot);
   }
 
@@ -28,7 +28,7 @@ class _PostListViewState extends State<PostListView> {
       stream: _getPostsStream(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasData) {
-          PostsList postsList = _getPostsList(snapshot.data!);
+          PostsList postsList = _postsListToModel(snapshot.data!);
           return ListView.builder(
             itemCount: postsList.length(),
             itemBuilder: (context, index) {
