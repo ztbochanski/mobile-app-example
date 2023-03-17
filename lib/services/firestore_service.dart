@@ -3,22 +3,22 @@ import 'package:location/location.dart';
 import 'package:wasteagram/services/location_service.dart';
 import 'package:wasteagram/models/post.dart';
 
-class Fires {
+class FirestoreService {
   final String collectionName = 'posts';
 
   // Singleton pattern
-  static late Fires _instance;
+  static late FirestoreService _instance;
 
-  Fires._() {
+  FirestoreService._() {
     _instance = this;
   }
 
-  factory Fires.getInstance() {
+  factory FirestoreService.getInstance() {
     return _instance;
   }
 
   static Future<void> initialize() async {
-    _instance = Fires._();
+    _instance = FirestoreService._();
   }
 
   // CRUD methods
