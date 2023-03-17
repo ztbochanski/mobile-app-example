@@ -7,6 +7,7 @@ class PostsList {
 
   PostsList(this.posts);
 
+  /// A factory method for creating a `PostList` of `Posts` from a Firestore query snapshot.
   factory PostsList.fromFirestore(QuerySnapshot snapshot) {
     List<Post> posts =
         snapshot.docs.map((doc) => Post.fromFirestore(doc)).toList();
