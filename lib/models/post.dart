@@ -1,5 +1,4 @@
 import 'package:intl/intl.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 /// Acts a data access object (DAO) for the managing posts in the database or as
