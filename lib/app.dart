@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:wasteagram/screens/list_screen.dart';
 
 class App extends StatelessWidget {
@@ -13,7 +12,7 @@ class App extends StatelessWidget {
         primarySwatch: Colors.pink,
       ),
       routes: {
-        '/': (context) => ListScreen(),
+        ListScreen.routeName: (context) => const ListScreen(),
       },
     );
   }
