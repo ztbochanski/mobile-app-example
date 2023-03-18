@@ -58,7 +58,10 @@ class _ListScreenState extends State<ListScreen> {
         } else {
           return Scaffold(
               appBar: AppBar(title: TitleText(title: screenTitle, quantity: 0)),
-              body: const Center(child: CircularProgressIndicator()));
+              body: const Center(child: CircularProgressIndicator()),
+              floatingActionButton: const NewPostButton(),
+              floatingActionButtonLocation:
+                  FloatingActionButtonLocation.centerFloat);
         }
       },
     );
