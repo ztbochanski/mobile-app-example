@@ -37,6 +37,8 @@ dependencies:
   cloud_firestore: ^4.4.4
   intl: ^0.18.0
   firebase_storage: ^11.0.15
+  fake_cloud_firestore: ^2.4.1+1
+  location: ^4.4.0
 
 dev_dependencies:
   flutter_test:
