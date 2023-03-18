@@ -13,6 +13,7 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
+  final String screenTitle = 'posts';
   final FirestoreService _firestoreService = FirestoreService.getInstance();
 
   Stream<QuerySnapshot> _getPostsStream() {
@@ -35,8 +36,8 @@ class _ListScreenState extends State<ListScreen> {
 
           return Scaffold(
               appBar: AppBar(
-                title: Text('Posts - $totalQuantity wasted items'),
-              ),
+                  title:
+                      TitleText(title: screenTitle, quantity: totalQuantity)),
               body: ListView.builder(
                 itemCount: postsList.length(),
                 itemBuilder: (context, index) {
@@ -52,19 +53,28 @@ class _ListScreenState extends State<ListScreen> {
                   FloatingActionButtonLocation.centerFloat);
         } else if (snapshot.hasError) {
           return Scaffold(
-              appBar: AppBar(
-                title: const Text('Posts'),
-              ),
+              appBar: AppBar(title: TitleText(title: screenTitle, quantity: 0)),
               body: const Center(child: Text('An error occurred')));
         } else {
           return Scaffold(
-              appBar: AppBar(
-                title: const Text('Posts'),
-              ),
+              appBar: AppBar(title: TitleText(title: screenTitle, quantity: 0)),
               body: const Center(child: CircularProgressIndicator()));
         }
       },
     );
+  }
+}
+
+class TitleText extends StatelessWidget {
+  final String title;
+  final int quantity;
+
+  const TitleText({required this.title, required this.quantity, Key? key})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text('$title - $quantity wasted items');
   }
 }
 
