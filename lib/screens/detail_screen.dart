@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:wasteagram/models/post.dart';
 
 class DetailScreen extends StatelessWidget {
-  const DetailScreen({Key? key}) : super(key: key);
+  final Post post;
+  const DetailScreen({required this.post, Key? key}) : super(key: key);
 
   static const routeName = '/list_detail';
 
@@ -9,10 +11,32 @@ class DetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('List Detail'),
+        title: const Text('Waste Details'),
       ),
-      body: const Center(
-        child: Text('List Detail'),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(post.formattedDate.toString()),
+          SizedBox(
+            height: 350,
+            width: 600,
+            child: Image.network(
+              'https://robohash.org/${post.id}',
+              fit: BoxFit.cover,
+              loadingBuilder: (BuildContext context, Widget child,
+                  ImageChunkEvent? loadingProgress) {
+                if (loadingProgress == null) return child;
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
+            ),
+          ),
+          Text(post.quantity.toString()),
+          Text(post.latitude.toString()),
+          Text(post.longitude.toString()),
+        ],
       ),
     );
   }

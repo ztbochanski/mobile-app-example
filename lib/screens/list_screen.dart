@@ -2,6 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wasteagram/services/firestore_service.dart';
 import 'package:wasteagram/models/posts_list.dart';
+import 'package:wasteagram/widgets/new_post_button.dart';
+import 'package:wasteagram/widgets/post_list_tile.dart';
+import 'package:wasteagram/widgets/title_text.dart';
 
 class ListScreen extends StatefulWidget {
   const ListScreen({Key? key}) : super(key: key);
@@ -13,7 +16,7 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
-  final String screenTitle = 'posts';
+  final String screenTitle = 'Posts';
   final FirestoreService _firestoreService = FirestoreService.getInstance();
 
   Stream<QuerySnapshot> _getPostsStream() {
@@ -43,9 +46,7 @@ class _ListScreenState extends State<ListScreen> {
                 itemBuilder: (context, index) {
                   postsList.descendingSort();
                   var post = postsList.posts[index];
-                  return ListTile(
-                      title: Text(post.formattedDate.toString()),
-                      subtitle: Text(post.quantity.toString()));
+                  return PostListTile(post: post);
                 },
               ),
               floatingActionButton: const NewPostButton(),
@@ -65,31 +66,5 @@ class _ListScreenState extends State<ListScreen> {
         }
       },
     );
-  }
-}
-
-class TitleText extends StatelessWidget {
-  final String title;
-  final int quantity;
-
-  const TitleText({required this.title, required this.quantity, Key? key})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Text('$title - $quantity wasted items');
-  }
-}
-
-class NewPostButton extends StatelessWidget {
-  const NewPostButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return FloatingActionButton(
-        child: const Icon(Icons.camera_alt),
-        onPressed: () {
-          print('New post button pressed');
-        });
   }
 }
