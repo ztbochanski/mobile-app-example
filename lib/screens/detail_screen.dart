@@ -33,9 +33,9 @@ class DetailScreen extends StatelessWidget {
               },
             ),
           ),
-          Text(post.quantity.toString()),
-          Text(post.latitude.toString()),
-          Text(post.longitude.toString()),
+          Text('Quantity: ${post.quantity.toString()}'),
+          Text('Latitude: ${post.latitude.toString()}'),
+          Text('Longitude: ${post.longitude.toString()}'),
         ],
       ),
     );
