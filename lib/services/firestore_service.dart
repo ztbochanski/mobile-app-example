@@ -26,13 +26,14 @@ class FirestoreService {
   }
 
   Future<void> addMetadata(Post post) async {
-    LocationData? loc = await LocationService.getLocation();
+    LocationData? loc = await LocationService.getInstance().getLocation();
     post.latitude = loc!.latitude as double;
     post.longitude = loc.longitude as double;
     post.date = DateTime.now();
   }
 
   Future<void> uploadPost(Post post) async {
+    await addMetadata(post);
     await FirebaseFirestore.instance
         .collection(collectionName)
         .doc(post.id)
