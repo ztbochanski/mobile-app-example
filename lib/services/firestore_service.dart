@@ -32,10 +32,10 @@ class FirestoreService {
     post.date = DateTime.now();
   }
 
-  Future<void> addPost(Post post) async {
-    await addMetadata(post);
+  Future<void> uploadPost(Post post) async {
     await FirebaseFirestore.instance
         .collection(collectionName)
-        .add(post.toMap());
+        .doc(post.id)
+        .set(post.toMap());
   }
 }
