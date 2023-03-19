@@ -23,7 +23,7 @@ class LocationService {
   }
 
   // Get the location asynchronously
-  static Future<LocationData?> getLocation() async {
+  Future<LocationData?> getLocation() async {
     try {
       var serviceEnabled = await location.serviceEnabled();
       if (!serviceEnabled) {
@@ -43,8 +43,7 @@ class LocationService {
         }
       }
     } on PlatformException catch (e) {
-      // ignore: avoid_print
-      print('PlatformException: $e');
+      stderr.writeln('Failed to get location: $e');
       _locationData = null;
     }
 
