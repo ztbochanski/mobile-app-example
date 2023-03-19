@@ -32,8 +32,7 @@ class _NewPostFormState extends State<NewPostForm> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: 350,
-              width: 600,
+              height: 400,
               child: Image.network(
                 widget.url,
                 fit: BoxFit.cover,
@@ -54,6 +53,8 @@ class _NewPostFormState extends State<NewPostForm> {
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter a number';
+                } else if (int.tryParse(value) == null) {
+                  return 'Please enter a valid number';
                 }
                 return null;
               },
