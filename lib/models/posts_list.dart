@@ -21,7 +21,7 @@ class PostsList {
   int length() => posts.length;
 
   void descendingSort() {
-    posts.sort((a, b) => b.date.compareTo(a.date));
+    posts.sort((a, b) => b.date!.compareTo(a.date!));
   }
 
   int totalQuantity() {
