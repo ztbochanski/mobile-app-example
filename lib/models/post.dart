@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 /// Acts a data access object (DAO) for the managing posts in the database or as
 /// data transfer object (DTO) for transferring data between screens (UI).
 class Post {
-  String id;
+  String? id;
   DateTime date;
   String imageURL;
   double latitude;
@@ -12,7 +12,7 @@ class Post {
   int quantity;
 
   Post({
-    required this.id,
+    this.id,
     required this.date,
     required this.imageURL,
     required this.latitude,
