@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:wasteagram/services/firestore_service.dart';
 import 'package:wasteagram/models/posts_list.dart';
@@ -7,7 +8,10 @@ import 'package:wasteagram/widgets/post_list_tile.dart';
 import 'package:wasteagram/widgets/title_text.dart';
 
 class ListScreen extends StatefulWidget {
-  const ListScreen({Key? key}) : super(key: key);
+  const ListScreen({required this.analytics, required this.observer, Key? key})
+      : super(key: key);
+  final FirebaseAnalytics analytics;
+  final FirebaseAnalyticsObserver observer;
 
   static const routeName = '/';
 
@@ -46,10 +50,10 @@ class _ListScreenState extends State<ListScreen> {
                 itemBuilder: (context, index) {
                   postsList.descendingSort();
                   var post = postsList.posts[index];
-                  return PostListTile(post: post);
+                  return PostListTile(analytics: widget.analytics, post: post);
                 },
               ),
-              floatingActionButton: const NewPostFAB(),
+              floatingActionButton: NewPostFAB(analytics: widget.analytics),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerFloat);
         } else if (snapshot.hasError) {
@@ -60,7 +64,7 @@ class _ListScreenState extends State<ListScreen> {
           return Scaffold(
               appBar: AppBar(title: TitleText(title: screenTitle, quantity: 0)),
               body: const Center(child: CircularProgressIndicator()),
-              floatingActionButton: const NewPostFAB(),
+              floatingActionButton: NewPostFAB(analytics: widget.analytics),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerFloat);
         }
