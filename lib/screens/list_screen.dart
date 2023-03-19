@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:wasteagram/services/firestore_service.dart';
 import 'package:wasteagram/models/posts_list.dart';
-import 'package:wasteagram/widgets/new_post_button.dart';
+import 'package:wasteagram/widgets/new_post_fab.dart';
 import 'package:wasteagram/widgets/post_list_tile.dart';
 import 'package:wasteagram/widgets/title_text.dart';
 
@@ -49,7 +49,7 @@ class _ListScreenState extends State<ListScreen> {
                   return PostListTile(post: post);
                 },
               ),
-              floatingActionButton: const NewPostButton(),
+              floatingActionButton: const NewPostFAB(),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerFloat);
         } else if (snapshot.hasError) {
@@ -60,7 +60,7 @@ class _ListScreenState extends State<ListScreen> {
           return Scaffold(
               appBar: AppBar(title: TitleText(title: screenTitle, quantity: 0)),
               body: const Center(child: CircularProgressIndicator()),
-              floatingActionButton: const NewPostButton(),
+              floatingActionButton: const NewPostFAB(),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerFloat);
         }
