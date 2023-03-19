@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 /// data transfer object (DTO) for transferring data between screens (UI).
 class Post {
   String? id;
-  DateTime date;
+  DateTime? date;
   String imageURL;
   double latitude;
   double longitude;
@@ -13,11 +13,11 @@ class Post {
 
   Post({
     this.id,
-    required this.date,
-    required this.imageURL,
-    required this.latitude,
-    required this.longitude,
-    required this.quantity,
+    this.date,
+    this.imageURL = '',
+    this.latitude = 0.0,
+    this.longitude = 0.0,
+    this.quantity = 0,
   });
 
   /// Converts the post to a map for saving to the database.
@@ -46,5 +46,5 @@ class Post {
   }
 
   /// Returns the date in a formatted string (e.g. "January 1, 2021")
-  String get formattedDate => DateFormat.yMMMMEEEEd().format(date);
+  String get formattedDate => DateFormat.yMMMMEEEEd().format(date!);
 }
