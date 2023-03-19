@@ -21,9 +21,11 @@ class ImagePickerService {
   }
 
   /// returns a [File] object from the image picked from the gallery
-  Future<File> pickImageFromGallery() async {
+  Future pickImageFromGallery() async {
     final XFile? pickedFile =
         await _picker.pickImage(source: ImageSource.gallery);
-    return File(pickedFile!.path);
+    if (pickedFile != null) {
+      return File(pickedFile.path);
+    }
   }
 }
