@@ -22,7 +22,7 @@ class DetailScreen extends StatelessWidget {
             height: 350,
             width: 600,
             child: Image.network(
-              'https://robohash.org/${post.id}',
+              '${post.imageURL}/${post.quantity}',
               fit: BoxFit.cover,
               loadingBuilder: (BuildContext context, Widget child,
                   ImageChunkEvent? loadingProgress) {
