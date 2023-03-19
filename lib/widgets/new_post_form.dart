@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:wasteagram/models/post.dart';
+import 'package:wasteagram/services/firestore_service.dart';
 
 class NewPostForm extends StatefulWidget {
   final String url;
@@ -12,6 +14,9 @@ class NewPostForm extends StatefulWidget {
 class _NewPostFormState extends State<NewPostForm> {
   final _formKey = GlobalKey<FormState>();
   final _quantityController = TextEditingController();
+  final _firestoreService = FirestoreService.getInstance();
+
+  final Post post = Post();
 
   @override
   void dispose() {
@@ -32,7 +37,7 @@ class _NewPostFormState extends State<NewPostForm> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: 400,
+              height: 300,
               child: Image.network(
                 widget.url,
                 fit: BoxFit.cover,
@@ -50,6 +55,9 @@ class _NewPostFormState extends State<NewPostForm> {
               decoration: const InputDecoration(
                 hintText: 'Number of items',
               ),
+              onSaved: (value) {
+                post.quantity = int.parse(value!);
+              },
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please enter a number';
@@ -62,6 +70,9 @@ class _NewPostFormState extends State<NewPostForm> {
             ElevatedButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
+                  _formKey.currentState!.save();
+                  post.imageURL = widget.url;
+                  _firestoreService.uploadPost(post);
                   Navigator.pop(context, _quantityController.text);
                 }
               },
